@@ -1,0 +1,9 @@
+#logo{
+    height: 5em;
+}
+.auth-item a{
+    padding: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    color: #6c757d;
+}

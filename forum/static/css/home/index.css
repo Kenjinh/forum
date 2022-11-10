@@ -1,0 +1,46 @@
+.sideNavContainer{
+    display: flex;
+    flex-direction: column;
+    
+}
+.IndexPage-nav{
+    width: 20em;
+}
+.IndexPage-nav > ul > li{
+    list-style: none;
+}
+.item-newDiscussion{
+    justify-content: center;
+    align-items: center;
+}
+.puclish-topics{
+    background-color: #ffffff;
+    border: 1px solid #a197fb;
+    border-radius: 0.4em;
+    padding: 0.2em 3em;
+}
+.item-nav{
+    margin-top: 20px;
+}
+.all-topics{
+    background-color: #ffffff;
+    border: 0px;
+    color: #a197fb;
+    font-weight: bolder;
+}
+.separator{
+    height: 1px;
+    margin: 8px 0;
+}
+.item-category{
+    font-weight: lighter;
+    color: #9c9c9c;
+    padding: 8px;
+}
+.item-category > a:hover{
+    color: #5242dc;
+}
+.item-category > a{
+    text-decoration: none;
+    color: #9c9c9c;
+}
