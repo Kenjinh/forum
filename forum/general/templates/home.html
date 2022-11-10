@@ -1,0 +1,30 @@
+{% extends 'headers.html' %}
+{% load static %}
+{% block title %}{{app_name}}-{{ title }}{% endblock %}
+{% block imports %}
+<link href="{% static 'css/home/index.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="sideNavContainer">
+        <nav class="IndexPage-nav">
+            <ul>
+                <li class="item-newDiscussion">
+                    <button class="puclish-topics" type="button">Publicar</button>
+                </li>
+                <li class="item-nav">
+                    <div class="dropdown">
+                        <button class="all-topics" type="button"><i class="fa-light fa-comments"></i> Todos tópicos</button>
+                    </div>
+                </li>
+                <li class="separator"></li>
+                <li class="item-category"><a href="#"><i class="fa-regular fa-music"></i> Música</a></li>
+                <li class="item-category"><a href="#"><i class="fa-regular fa-code"></i> Desenvolvimento</a></li>
+                <li class="item-category"><a href="#"><i class="fa-regular fa-display"></i> Dispositivos</a></li>
+            </ul>
+        </nav>
+        <div class="IndexPage-results"></div>
+    </div>
+</div>
+
+{% endblock %}
