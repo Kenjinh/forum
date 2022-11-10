@@ -8,6 +8,9 @@ class PostCategory(models.Model):
 
     class Meta:
         db_table = 'tb_forum_topics_posts_ctg'
+    
+    def __str__(self):
+        return self.category
 
 
 class Post(models.Model):
