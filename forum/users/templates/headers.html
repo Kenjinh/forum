@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {% block imports %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+</head>
+<body>
+    <nav class="navbar navbar-light justify-content-around">
+        <a id="logo" href="/" class="navbar-brand"><img src="{% static 'img/forum-logo.png' %}" alt="FORUM" height="100em"></a>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        {% if user.is_authenticated %}
+        <div class="dropdown">
+            <button class="btn dropdown-toggle btn-lg" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid fa-circle-user"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">Loggout</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="auth-item">
+            <a class="navbar-item" href="{% url 'Login' %}?next={{ request.path }}">Login</a>
+            <a class="navbar-item" href="{% url 'Register' %}">Registrar-se</a>
+        </div>
+        {% endif %}
+
+    </nav>
+    <main>
+        <div class="content">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
+    <footer>
+        <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5">
+        <!-- Copyright -->
+        <div class="text-black mb-3 mb-md-0">
+            Kenji Nohara © 2020. All rights reserved.
+        </div>
+        <!-- Copyright -->
+        <div>
+            <a href="https://github.com/Kenjinh" target="_blank" class="text-black me-4">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/kenji-nohara/" target="_blank" class="text-black">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+    <!-- Right -->
+  </div>
+    </footer>
+    {% block scripts %}{% endblock %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

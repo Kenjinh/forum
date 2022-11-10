@@ -1,0 +1,43 @@
+{% extends 'headers.html' %}
+{% load static %}
+{% block title %}{{app_name}}-{{ title }}{% endblock %}
+{% block imports %}
+    <script src="{% static 'js/accounts/index.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="{% static 'img/forum-image.png' %}" class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 p-5 mt-5">
+        {% if erro_form %}
+            <ol>
+                <li><strong>{{ erro_form }}</strong></li>
+            </ol>
+        {% endif %}
+        <form method="POST" action="{% url 'Register' %}" style="display:flex;flex-direction: column;">
+            {% load crispy_forms_tags %}
+            {% csrf_token %}
+            {{ form }}
+            <div class="text-center text-lg-start mt-4 pt-2">
+                <button type="submit" class="btn btn-outline-secondary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrar-se</button>
+            </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function(){
+            $('#id_first_name').focus();
+        });
+        $('#id_birth_date').addClass('form-control');
+        $('#id_birth_date').attr('type', 'date');
+    </script>
+{% endblock %}

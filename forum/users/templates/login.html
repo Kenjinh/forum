@@ -1,0 +1,45 @@
+{% extends 'headers.html' %}
+{% load static %}
+{% block imports %}
+
+{% endblock %}
+{% block title %}Forum - Login{% endblock %}
+{% block content %}
+    <section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="{% static 'img/forum-image.png' %}" class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 p-5 mt-5">
+          {% if form.errors %}
+            <p>Seu email ou senha estão inválido. Por favor tente novamente.</p>
+          {% endif %}
+        <form method="POST" action="{% url 'Login' %}">
+            {% load crispy_forms_tags %}
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <div class="d-flex justify-content-center align-items-center">
+                <a href="#!" class="text-body">Esqueceu sua senha?</a>
+            </div>
+
+            <div class="text-center text-lg-start mt-4 pt-2">
+                <button type="submit" class="btn btn-outline-secondary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                <p class="small fw-bold mt-2 pt-1 mb-0">
+                    Você não tem conta?
+                    <a href="#" class="link-danger">Registrar-se</a></p>
+            </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $('.textinput').addClass('form-control form-control-lg')
+    </script>
+{% endblock %}
