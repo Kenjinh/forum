@@ -24,6 +24,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return "{name} {lastname}".format(name=self.first_name, lastname=self.last_name)
+    
+    def get_full_name(self):
+        return "{name} {lastname}".format(name=self.first_name, lastname=self.last_name)
 
     @staticmethod
     def create_user(first_name, last_name, gender, birth_date, email, password, **extra_fields):

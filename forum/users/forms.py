@@ -33,9 +33,7 @@ class NewUserForm(UserCreationForm):
 
     def save(self, commit=True):
         try:
-            print(self)
             user = super(NewUserForm, self).save(commit=False)
-            print(self.cleaned_data)
             user.email = self.cleaned_data['email']
             user.first_name = self.cleaned_data['first_name']
             user.last_name = self.cleaned_data['last_name']

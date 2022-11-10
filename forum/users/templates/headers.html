@@ -10,6 +10,7 @@
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {% block imports %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
@@ -30,7 +31,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#">Profile</a>
               <a class="dropdown-item" href="#">Settings</a>
-              <a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">Loggout</a>
+              <a class="dropdown-item" href="{% url 'Logout' %}?next={{ request.path }}">Loggout</a>
             </div>
         </div>
         {% else %}
