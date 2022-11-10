@@ -13,3 +13,20 @@ class CommentController(ListCreateAPIView):
         serializer.publish_date = datetime.datetime.now()
         serializer.save()
         return super().perform_create(serializer)
+
+class PostCategoryController(ListCreateAPIView):
+    queryset = PostCategory.objects.all()
+    serializer_class = PostCategorySerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+        return super().perform_create(serializer)
+
+class PostController(ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def perform_create(self, serializer):
+        serializer.publish_date = datetime.datetime.now()
+        serializer.save()
+        return super().perform_create(serializer)
