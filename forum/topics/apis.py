@@ -43,13 +43,3 @@ class PostController(ListCreateAPIView):
         return super().perform_create(serializer)
 
 
-class PostDetailController(RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-
-    def list(self, request, *args, **kwargs):
-        queryset = Post.objects.get(pk=kwargs['pk'])
-        serializer = self.get_serializer(queryset, many=True)
-
-        return Response(serializer.data)
-
