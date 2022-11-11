@@ -1,10 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'headers.html' %}
+{% load static %}
+{% block title %}{{app_name}}-{{ title }}{% endblock %}
+{% block imports %}
+    <link href="{% static 'css/topics/topics.css' %}" rel="stylesheet" text="text/css">
+{% endblock %}
+{% block content %}
+    <header class="topic-hero"><span class="hero-category">{{ post.category }}</span><span class="hero-title">{{ post.title }}</span></header>
+    <div class="topic-content">
+        <div class="topic-author">
+            <div class="author-info">
+                <span class="author-name">{{ post.user }}</span>
+                <span class="post-date">{{ post.publish_date }}</span>
+            </div>
+        </div>
+        <div class="topic-body">
+            <p>{{ post.content }}</p>
+    </div>
+    {% for comment in comments %}
+    <div class="comment">
+        <div class="comment-author">
+            <div class="author-info">
+                <span class="comment-author-name">{{ comment.user }}</span>
+                <span class="comment-date">{{ comment.publish_date }}</span>
+            </div>
+        </div>
+        <div class="comment-body">
+            <p>{{ comment.comment }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="comment-form">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        <textarea class="comment-input" type="text" placeholder="Escreva seu comentário"></textarea>
+        <button class="comment-button" onClick="Post_Comment()">Comentar</button>
+    {% else %}
+        <p class="comment-login">Faça login para comentar</p>
+    {% endif %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        function Post_Comment(){
+            const date = new Date().toJSON().split('T')[0];
+            const csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
+            const comment = document.querySelector('.comment-input').value;
+            const user = "{{ user.username }}";
+            const post = "{{ post.id }}";
+            const data = {
+                "comment": comment,
+                "user": user,
+                "post": post,
+                "publish_date": date
+            }
+            const url = "{% url 'Comment-API' %}";
+            const request = new XMLHttpRequest();
+            request.open("POST", url, true);
+            request.setRequestHeader("X-CSRFToken", csrf_token);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.setRequestHeader("Accept", "application/json");
+            request.send(JSON.stringify(data));
+            request.onload = function(){
+                const response = JSON.parse(request.responseText);
+                console.log(response);
+            }
+            location.reload();
+
+        }
+
+    </script>
+{% endblock %}
