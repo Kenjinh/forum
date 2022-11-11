@@ -32,8 +32,6 @@
                 <label for="title" style="display:block; font-weight: bolder;">Título</label>
                 <input class="input-title" type="text" name="title" placeholder="Escreva seu título"></input>
                 <textarea class="input-content" placeholder="Escreva seu post..." style="height:150px;"></textarea>
-                <input type="file" name="image" accept="image/jpeg,image/png,image/gif" hidden>
-                <label class="input-image" for="upload">Escolher Imagem</label>
                 <div class="post-form-footer">
                     <button class="button-form" onclick="Post_API()">Publicar</button>
                 </div>
@@ -54,27 +52,20 @@
             type: 'GET',
             success: function (data) {
                 var totalCount = data.length;
+                 console.log(data);
+                console.log(data[4].comments_array[0].comment);
                 var structure = '';
                 for (let i = 0; i < totalCount; i++){
-                    structure += '<div class="discussion">'+
+                    structure += '<div class="discussion"><div class="link-discussion" type="button" onclick="Redirect_topic('+data[i].id+')">'+
                     '<div class="title-discussion">'+ data[i].title+ '</div>'+
-                    '<div class="icon-comments"><i id="comments-button" type="button" class="fa-regular fa-comments" onclick=""></i></div>'+
+                    '<div class="icon-comments"><i id="comments-button" class="fa-regular fa-comments"></i>'+ data[i].comments_array.length +'</div>'+
                     '<div class="content-discussion">'+ data[i].content +'</div>'+
                     '<div class="footer-discussion">'+
-                        '<div class="author-discussion"><span style="font-weight: bolder;">Autor: </span>'+ data[i].user +'</div>'+
-                        '<div class="category-discussion"><span style="font-weight: bolder;">Categoria: </span>'+ data[i].category +'</div>'+
+                        '<div class="author-discussion"><span style="font-weight: bolder;">Autor: </span>'+ data[i].first_name +' '+ data[i].last_name +'</div>'+
+                        '<div class="category-discussion"><span style="font-weight: bolder;">Categoria: </span>'+ data[i].category_name +'</div>'+
                         '<div class="date-discussion"><span style="font-weight: bolder;">Data da  publicação: </span>'+ data[i].publish_date  +'</div>'+
                     '</div>'+
-                    '<div class="comments-discussion" style="display: none;">'+
-                        '<div class="comment">'+
-                            '<div class="content-comment">TESTE</div>'+
-                            '<div class="footer-comment">'+
-                                '<div class="author-comment"><span style="font-weight: bolder;">Autor: </span>Kenji</div>'+
-                                '<div class="date-comment"><span style="font-weight: bolder;">Data da  publicação: </span>2022-10-11</div>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'
+                '</div></div>'
                 }
 
                 $('.posts').html(structure);
@@ -85,12 +76,22 @@
 
         })
     );
+    function showComments(id){
+        if ($('.comments-discussion-'+id).css('display') == 'none'){
+            $('.comments-discussion-'+id).css('display', 'block');
+        }else{
+            $('.comments-discussion-'+id).css('display', 'none');
+        }
+    }
+    function Redirect_topic(id){
+        window.location.href = "/topics/"+id;
+    }
     function Post_API() {
+            const date = new Date().toJSON();
             var category = $('.input-category').val();
             var title = $('.input-title').val();
             var content = $('.input-content').val();
             var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
-            console.log(category, title, content);
             fetch('{% url "Post-API" %}', {
             method: 'POST',
             headers: {
@@ -98,12 +99,17 @@
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrf_token
             },
-            body: JSON.stringify({ 
-                category: category, 
-                title: title, 
-                content: content
+            body: JSON.stringify({
+                category: category,
+                title: title,
+                content: content,
+                publish_date: date
             })
             }).then(function(response) {
+                category = $('.input-category').val('');
+                title = $('.input-title').val('');
+                content = $('.input-content').val('');
+                location.reload();
                 return response.json();
             }).then(function(data) {
                 console.log(data);
@@ -120,14 +126,7 @@
             {% else %}
                 window.location.href = "{% url 'Login' %}";
             {% endif %}
-            
-        });
-        $('#comments-button').click(function() {
-            if ($('.comments-discussion').css('display') == 'none') {
-                $('.comments-discussion').css('display', 'block');
-            } else {
-                $('.comments-discussion').css('display', 'none');
-            }
+
         });
     });
 </script>
