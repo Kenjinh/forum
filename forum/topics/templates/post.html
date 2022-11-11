@@ -16,6 +16,19 @@
         <div class="topic-body">
             <p>{{ post.content }}</p>
     </div>
+    {% if comments|length >= 0 %}
+    <div class="comment">
+        <div class="comment-author">
+            <div class="author-info">
+                <span class="comment-author-name">{{ comments.user }}</span>
+                <span class="comment-date">{{ comments.publish_date }}</span>
+            </div>
+        </div>
+        <div class="comment-body">
+            <p>{{ comments.comment }}</p>
+        </div>
+    </div>
+    {% else %}
     {% for comment in comments %}
     <div class="comment">
         <div class="comment-author">
@@ -29,6 +42,7 @@
         </div>
     </div>
     {% endfor %}
+    {% endif %}
     <div class="comment-form">
     {% csrf_token %}
     {% if user.is_authenticated %}
