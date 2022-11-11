@@ -97,10 +97,16 @@
     cursor: pointer;
     margin: 10px 0 10px 0;
 }
+.posts{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
 .discussion{
     padding: 0.5em;
     border: 1px solid #a197fb;
     border-radius: 0.4em;
+    margin: 15px 10px;
 }
 .title-discussion{
     font-weight: bold;
@@ -144,11 +150,11 @@
 .icon-comments{
     margin-right: 10px;
     float: right;
+    font-weight: bolder;
 }
 #comments-button{
     color: #5242dc;
     font-weight: bolder;
+    margin: 5px;
 }
-#comments-button:hover{
-    color: #a197fb;
-}
+
