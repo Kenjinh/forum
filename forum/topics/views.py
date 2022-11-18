@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import generics
+from .forms import *
 
 
 # Create your views here.
@@ -23,3 +24,33 @@ class PostDetailView(generics.ListAPIView):
             "post_id": kwargs['pk']
         }
         return render(request, template_name=self.template_name, context=args)
+
+
+class CategoryDetailView(generics.ListAPIView):
+    template_name = "category.html"
+    form = NewCategoryForm()
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            args = {
+                "title": "Category Detail",
+                "permissions": "permissions",
+                "app_name": "Forum",
+                "form": self.form,
+            }
+            return render(request, template_name=self.template_name, context=args)
+        else:
+            redirect("/")
+
+    def post(self, request, *args, **kwargs):
+        from .models import PostCategory
+        if request.user.is_superuser:
+            form = NewCategoryForm(request.POST)
+            if form.is_valid():
+                category = PostCategory(category=form.cleaned_data['category'])
+                category.save()
+                return redirect("/topics/categories/")
+            else:
+                return redirect("/topics/categories/")
+        else:
+            redirect("/")

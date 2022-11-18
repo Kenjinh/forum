@@ -1,0 +1,27 @@
+{% extends 'headers.html' %}
+{% load static %}
+{% block title %}{{app_name}}-{{ title }}{% endblock %}
+{% block imports %}
+    <style>
+     .content{
+         display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+     }
+     form{
+         width: 50%;
+     }
+     .btn {
+         margin: 10px;
+     }
+    </style>
+{% endblock %}
+{% block content %}
+    <form action="{% url 'Categories' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from rest_framework import generics
 from django.contrib import messages
 from .forms import NewUserForm
+from .apis import ProfileAPI
 
 
 # Create your views here.
@@ -31,7 +32,7 @@ def RegisterPage(request):
             login(request, user)
             messages.info(request, f"You are now logged in as {email}")
             messages.success(request, "Registration successful.")
-            return redirect("main:Home Page")
+            return redirect("/")
         else:
             for msg in form.error_messages:
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
@@ -53,4 +54,18 @@ def RegisterPage(request):
         "form": form
     }
     return render(request=request, template_name="register.html", context=args)
+
+
+class ProfilePageView(generics.UpdateAPIView):
+    template_name = "profile.html"
+
+    def get(self, request, *args, **kwargs):
+        profile = ProfileAPI().get(request, *args, **kwargs).data
+        args = {
+            "title": "Profile",
+            "permissions": "permissions",
+            "app_name": "Forum",
+            "profile": profile
+        }
+        return render(request, template_name=self.template_name, context=args)
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-
+from topics.forms import *
 from topics.models import *
 
 
@@ -8,13 +8,15 @@ from topics.models import *
 
 class HomePageView(generics.ListAPIView):
     template_name = "home.html"
-    categories = list(PostCategory.objects.values_list('id', 'category'))
+    categories = PostCategory.objects.all()
+    form = NewPostForm()
 
     def get(self, request, *args, **kwargs):
         args = {
             "title": "Home",
             "permissions": "permissions",
             "app_name": "Forum",
-            "categories": self.categories
+            "categories": self.categories,
+            "form": self.form
         }
         return render(request, template_name=self.template_name, context=args)

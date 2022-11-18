@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 
+
 # Create your models here.
 
 class PostCategory(models.Model):
@@ -8,7 +9,7 @@ class PostCategory(models.Model):
 
     class Meta:
         db_table = 'tb_forum_topics_posts_ctg'
-    
+
     def __str__(self):
         return self.category
 
@@ -42,4 +43,3 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'tb_forum_topics_comments'
-

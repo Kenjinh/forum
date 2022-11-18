@@ -45,6 +45,7 @@
     margin-bottom: 5em;
     border-bottom: 1px solid #5242dc;
     padding-bottom: 3em;
+    flex-direction: column;
 }
 .input-category > a:hover{
     color: #5242dc;
@@ -79,6 +80,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 15px;
 }
 .button-form{
     background-color: #5242dc;

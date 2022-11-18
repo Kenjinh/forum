@@ -23,15 +23,16 @@
         <div class="IndexPage-results">
             <div class="post-form" style="display: none;">
                 {% csrf_token %}
-                <label for="Category" style="display:block; font-weight: bolder;">Category</label>
-                <select class="input-category" name="category">
-                    {% for category in categories %}
-                        <option value="{{category.0}}">{{category.1}}</option>
-                    {% endfor %}
-                </select>
-                <label for="title" style="display:block; font-weight: bolder;">Título</label>
-                <input class="input-title" type="text" name="title" placeholder="Escreva seu título"></input>
-                <textarea class="input-content" placeholder="Escreva seu post..." style="height:150px;"></textarea>
+                {{ form }}
+{#                <label for="Category" style="display:block; font-weight: bolder;">Category</label>#}
+{#                <select class="input-category" name="category">#}
+{#                    {% for category in categories %}#}
+{#                        <option value="{{category.0}}">{{category.1}}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#                <label for="title" style="display:block; font-weight: bolder;">Título</label>#}
+{#                <input class="input-title" type="text" name="title" placeholder="Escreva seu título"></input>#}
+{#                <textarea class="input-content" placeholder="Escreva seu post..." style="height:150px;"></textarea>#}
                 <div class="post-form-footer">
                     <button class="button-form" onclick="Post_API()">Publicar</button>
                 </div>
@@ -52,8 +53,6 @@
             type: 'GET',
             success: function (data) {
                 var totalCount = data.length;
-                 console.log(data);
-                console.log(data[4].comments_array[0].comment);
                 var structure = '';
                 for (let i = 0; i < totalCount; i++){
                     structure += '<div class="discussion"><div class="link-discussion" type="button" onclick="Redirect_topic('+data[i].id+')">'+
@@ -119,7 +118,7 @@
         $('.puclish-topics').click(function() {
             {% if user.is_authenticated %}
             if ($('.post-form').css('display') == 'none') {
-                $('.post-form').css('display', 'block');
+                $('.post-form').css('display', 'flex');
             } else {
                 $('.post-form').css('display', 'none');
             }

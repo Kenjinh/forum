@@ -1,0 +1,52 @@
+{% extends 'headers.html' %}
+{% load static %}
+{% block imports %}
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/18.2.18/css/dx.common.css">
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/18.2.18/css/dx.light.css">
+    <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/18.2.18/js/dx.all.js"></script>
+    <style>
+    #profile{
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+    .form-profile{
+        width: 50%;
+        margin: 20px;
+    }
+    </style>
+{% endblock %}
+{% block title %}{{ title }}-{{ app_name }}{% endblock %}
+{% block content %}
+    <div id="profile">
+        <form class="form-profile" action="{% url 'Profile-API' %}" method="POST">
+            {% csrf_token %}
+            <input name="_method" type="hidden" value="PATCH">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="{{ user.email }}">
+            </div>
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" value="{{ user.first_name }}">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" placeholder="Last Name" name="last_name" value="{{ user.last_name }}">
+            </div>
+            <button id="submit" type="submit" class="btn btn-primary" onclick="Return()">Submit</button>
+        </form>
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+    function Return(){
+        window.location.href = "{% url 'Profile' %}";
+    }
+    </script>
+{% endblock %}
