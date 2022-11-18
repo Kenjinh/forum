@@ -30,7 +30,7 @@
                 <i class="fa-solid fa-circle-user"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {% if user.is_superuser %}
+                {% if user.is_staff %}
                     <a class="dropdown-item" href="{% url 'Categories' %}">Categorias</a>
                 {% endif %}
                 <a class="dropdown-item" href="{% url 'Profile' %}">Perfil</a>

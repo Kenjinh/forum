@@ -31,7 +31,7 @@ class CategoryDetailView(generics.ListAPIView):
     form = NewCategoryForm()
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_superuser:
+        if request.user.is_staff:
             args = {
                 "title": "Category Detail",
                 "permissions": "permissions",
@@ -40,11 +40,11 @@ class CategoryDetailView(generics.ListAPIView):
             }
             return render(request, template_name=self.template_name, context=args)
         else:
-            redirect("/")
+            return redirect("/")
 
     def post(self, request, *args, **kwargs):
         from .models import PostCategory
-        if request.user.is_superuser:
+        if request.user.is_staff:
             form = NewCategoryForm(request.POST)
             if form.is_valid():
                 category = PostCategory(category=form.cleaned_data['category'])
@@ -53,4 +53,4 @@ class CategoryDetailView(generics.ListAPIView):
             else:
                 return redirect("/topics/categories/")
         else:
-            redirect("/")
+            return redirect("/")
